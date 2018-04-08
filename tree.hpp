@@ -27,22 +27,23 @@ private:
             delete right;
         }
         
-        void add_element ( int value, node_t *& current )
+        void add_element (int value)
         {
-            if(current == nullptr)
+            if (this->value > value)
             {
-                current = new node_t(value);
+                if (left == nullptr)
+                {
+                    left = new node_t();
+                    left->value = value;
+                }
+                else left->add_element(value);
             }
-            else
-            {
-                if(value<current->value)
-                {
-                    add_element(value, current->left);
+            else if (this->value < value) {
+                if (right == nullptr){
+                    right = new node_t;
+                    right->value = value;
                 }
-                else if (value>current->value)
-                {
-                    add_element(value,current->right);
-                }
+                else right->add_element(value);
             }
         }
         
@@ -103,7 +104,12 @@ public:
     
     void insert(int value)
     {
-        root_->add_element(value,root_);
+        if (root_ == nullptr)
+        {
+            root_ = new node_t;
+            root_->value = value;
+        }
+        else root_->add_element(value);
     }
     
     bool find(int value) const
@@ -118,25 +124,3 @@ public:
         root_->print_tree(0,stream);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
